@@ -5,7 +5,10 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.util.ArraySet;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +20,11 @@ import android.widget.TextView;
 
 import com.example.xie.okhttpdemo.R;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by xie on 2018/1/26.
@@ -29,10 +35,11 @@ class MusicAdapter extends BaseAdapter {
     private static final int MUSIC_PLAY = 1;
     private static final int MUSIC_STOP = 2;
     private Context context;
-    private List<Map<String, Object>> musicList;
+    private List<MusicBean> musicList;
     Boolean isStop = true;
-
-    public MusicAdapter(Context context, List<Map<String, Object>> musicList) {
+    Boolean isNow = true;
+    private Set<Integer> set = new HashSet<Integer>();
+    public MusicAdapter(Context context, List<MusicBean> musicList) {
         this.context = context;
         this.musicList = musicList;
     }
@@ -54,8 +61,10 @@ class MusicAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int i, View view, ViewGroup viewGroup) {
+        Log.e(TAG, "getView: ========" );
         final ViewHolder holder;
-
+        final MusicBean musicBean = new MusicBean();
+        musicBean.setId(-1);
         if (view == null) {
             view = LayoutInflater.from(context).inflate(R.layout.music_item, null);
             holder = new ViewHolder(view);
@@ -63,35 +72,48 @@ class MusicAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.music_item_title.setText(musicList.get(i).get("musicTitle") + "");
-        holder.music_item_author.setText(musicList.get(i).get("music_author") + "");
+        holder.music_item_title.setText(musicList.get(i).getTitle());
+        holder.music_item_author.setText(musicList.get(i).getAuthor());
+
         holder.item_music_play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int type;
+                Log.e(TAG, "onClick: qqqqqqqq"+set.size() );
+                if (set.size()==0){
+                    Log.e(TAG, "onClick: ================" );
+                    set.add(i);return;
+                }else if (set.size()==1){
+                    set.add(i);
+                    Log.e(TAG, "onClick: ==="+set.size() );
+                    Log.e(TAG, "onClick: 一致" );
+                    return;
+                }else if (set.size()==2){
+                    set.remove(0);
+                    Log.e(TAG, "onClick: +++"+set.size() );
+                    Log.e(TAG, "onClick: 不一致" );return;
+                }
                 if (isStop) {
-                    NotificationUtils.startNotification(context,isStop, musicList.get(i));
+                    NotificationUtils.startNotification(context, isStop, musicList.get(i));
                     holder.item_music_play.setText("暂停");
                     type = MUSIC_PLAY;
-                    isStop = false;
-                } else {
-                    NotificationUtils.startNotification(context,isStop, musicList.get(i));
 
+                } else {
+                    NotificationUtils.startNotification(context, isStop, musicList.get(i));
                     holder.item_music_play.setText("播放");
                     type = MUSIC_STOP;
                     isStop = true;
                 }
                 Intent intent = new Intent(context, MusicService.class);
                 intent.putExtra("type", type);
-                intent.putExtra("url", musicList.get(i).get("musicFileUrl") + "");
+                intent.putParcelableArrayListExtra("musicList", (ArrayList<? extends Parcelable>) musicList);
+                intent.putExtra("ID", i);
                 context.startService(intent);
 
             }
         });
         return view;
     }
-
-
 
 
     class ViewHolder {

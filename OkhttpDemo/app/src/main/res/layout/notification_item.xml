@@ -3,25 +3,28 @@
     xmlns:tool="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="120dp"
+    android:layout_height="100dp"
     >
         <ImageView
             android:id="@+id/notification_music_image"
-            android:layout_width="120dp"
-            android:layout_height="120dp" />
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
     <RelativeLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="120dp">
+        android:layout_height="100dp">
         <TextView
             android:id="@+id/notification_music_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="阿刁"
+            tool:text="阿刁和我自已ssssssssssssssssssssssssssssss"
             android:textSize="20sp"
             android:textColor="#000"
             android:layout_marginLeft="13dp"
             android:layout_marginTop="13dp"
+            android:ellipsize = "marquee"
+            android:maxLines="1"
+            android:maxEms="5"
         />
         <TextView
             android:id="@+id/notification_music_author"
@@ -30,8 +33,10 @@
             android:layout_below="@+id/notification_music_name"
             android:layout_marginLeft="13dp"
             android:textSize="15sp"
-            android:text="赵雷"
+            tool:text="赵雷"
             android:textColor="#000"
+            android:maxLines="1"
+            android:maxEms="5"
             />
 
         <TextView
@@ -59,7 +64,7 @@
                 android:id="@+id/notification_music_play"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/bofang"
+                android:src="@drawable/zanting"
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 />

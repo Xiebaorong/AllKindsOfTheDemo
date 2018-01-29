@@ -39,12 +39,7 @@
         <activity android:name=".music.MusicActivity" />
         <activity android:name=".eventbus.ToMessageActivity" />
         <service android:name=".music.MusicService"/>
-        <receiver android:name=".music.MyBroadCastReceiver">
-            <intent-filter >
-                <action android:name="com.example.xie.okhttpdemo.music.MyBroadCastReceiver"/>
-            </intent-filter>
 
-        </receiver>
     </application>
 
 </manifest>

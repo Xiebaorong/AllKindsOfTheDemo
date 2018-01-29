@@ -47,9 +47,8 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     ListView music_all;
 
     Boolean isStop = true;
-    private MyBroadCastReceiver receiver;
 
-    private List<Map<String, Object>> musicList = new ArrayList<>();
+    private List<MusicBean> musicList = new ArrayList<>();
 
     @Override
     protected int getLayout() {
@@ -58,10 +57,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onAcCreate() {
-        receiver = new MyBroadCastReceiver();
-        IntentFilter filter = new IntentFilter();
-        filter.addAction("com.complete");
-        registerReceiver(receiver,filter);
         music_find.setOnClickListener(this);
         music_play.setOnClickListener(this);
 //
@@ -107,28 +102,29 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
         }
     }
 
-    private List<Map<String, Object>> findMusic() {
-        List list = new ArrayList<>();
+    private List<MusicBean> findMusic() {
+        List<MusicBean> list = new ArrayList<>();
+
         Cursor cursor = getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
         if (cursor.moveToFirst()) {
             while (!cursor.isAfterLast()) {
                 int musicId = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media._ID));
-                String musicTitle = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
+                String title = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.TITLE));
                 String author = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
                 String url = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
                 long size = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
                 if (size > 1024 * 1000) {
-                    Map<String, Object> map = new HashMap<String, Object>();
-                    map.put("musicTitle", musicTitle);
-                    map.put("musicFileUrl", url);
-                    map.put("music_author", author);
-                    list.add(map);
+                    MusicBean musicBean = new MusicBean();
+                    musicBean.setAuthor(author);
+                    musicBean.setTitle(title);
+                    musicBean.setUrl(url);
+                    musicBean.setSize(size);
+
+                    list.add(musicBean);
                 }
                 cursor.moveToNext();
             }
 //            Log.e(TAG, "findMusic: \nid:"+musicId+"\nmusicTitle:"+musicTitle+"\nauthor:"+author+"\nurl:"+url+"\nsize:"+size);
-        } else {
-            list.add("null");
         }
         return list;
     }
@@ -137,6 +133,6 @@ public class MusicActivity extends BaseActivity implements View.OnClickListener 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+//        unregisterReceiver(receiver);
     }
 }
