@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#ffffff"
+    >
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#303F9F"
+        android:text="点击按钮进入测试用例"
+        android:textColor="#fff"
+        />
+
+    <ListView
+        android:id="@+id/main_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+</LinearLayout>

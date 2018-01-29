@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+>
+    <TextView
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text="仿微信拍照排列"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:background="#303F9F"
+        />
+    <GridView
+        android:id="@+id/phoneGrid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="4"
+        android:verticalSpacing="5dp"
+        >
+
+    </GridView>
+</LinearLayout>
