@@ -3,6 +3,8 @@ package com.example.xie.okhttpdemo;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +31,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract int getLayout();
 
-    public abstract void onAcCreate();
+    protected abstract void onAcCreate();
 
 
 }

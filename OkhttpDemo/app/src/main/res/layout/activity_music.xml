@@ -41,41 +41,36 @@
         >
 
     </ListView>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:orientation="horizontal"
-        android:gravity="center"
         >
+       <android.support.v7.widget.RecyclerView
+           android:id="@+id/music_recycler_list"
+           android:layout_width="0dp"
+           android:layout_height="match_parent"
+           android:layout_weight="1"
+
+           >
+
+       </android.support.v7.widget.RecyclerView>
         <ImageView
-            android:id="@+id/music_image"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@drawable/icon_addpic_unfocused"
-            />
-        <Button
-            android:id="@+id/music_up"
-            android:layout_centerInParent="true"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="上一曲"
-            />
-
-        <Button
             android:id="@+id/music_play"
-            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="播放" />
-
-        <Button
+            android:src="@drawable/bofang"
+            />
+        <ImageView
             android:id="@+id/music_down"
-            android:layout_width="0dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="下一曲"
+            android:src="@drawable/down"
             />
     </LinearLayout>
 </LinearLayout>

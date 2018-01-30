@@ -25,8 +25,10 @@ public class NotificationUtils {
     private static final String MUSIC_PAUSES ="MusicService.MUSIC_PAUSES" ;
     //广播三 上一曲
     private static final String MUSIC_UP ="MusicService.MUSIC_UP" ;
-    //广播二 下一曲
+    //广播四 下一曲
     private static final String MUSIC_DOWN ="MusicService.MUSIC_DOWN" ;
+    //广播五 关闭
+    private static final String MUSIC_STOP ="MusicService.MUSIC_STOP" ;
 
 
     public static void startNotification(Context context, Boolean isStop, MusicBean musicMap) {
@@ -47,12 +49,12 @@ public class NotificationUtils {
         remoteViews.setTextViewText(R.id.notification_music_name,musicMap.getTitle());
         PendingIntent playIntent = PendingIntent.getBroadcast(context,1,new Intent(type),PendingIntent.FLAG_CANCEL_CURRENT);
         remoteViews.setOnClickPendingIntent(R.id.notification_music_play,playIntent);
-
-
         PendingIntent upIntent = PendingIntent.getBroadcast(context,2,new Intent(MUSIC_UP),PendingIntent.FLAG_CANCEL_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notification_music_up,playIntent);
+        remoteViews.setOnClickPendingIntent(R.id.notification_music_up,upIntent);
         PendingIntent downIntent = PendingIntent.getBroadcast(context,3,new Intent(MUSIC_DOWN),PendingIntent.FLAG_CANCEL_CURRENT);
-        remoteViews.setOnClickPendingIntent(R.id.notification_music_down,playIntent);
+        remoteViews.setOnClickPendingIntent(R.id.notification_music_down,downIntent);
+        PendingIntent stopIntent = PendingIntent.getBroadcast(context,4,new Intent(MUSIC_STOP),PendingIntent.FLAG_CANCEL_CURRENT);
+        remoteViews.setOnClickPendingIntent(R.id.notification_music_stop,stopIntent);
 
         builder .setOngoing(true)//不被滑动取消
                 .setCustomBigContentView(remoteViews)//显示大布局
@@ -61,6 +63,7 @@ public class NotificationUtils {
         Notification notification = builder.build();
         NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         manager.notify(1, notification);
+
 
     }
 }
